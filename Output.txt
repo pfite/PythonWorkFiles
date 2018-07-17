@@ -1,0 +1,8 @@
+Black
+55
+5 - default
+20.25
+25
+Three Section SH1 15 
+Three Section SH2 20 
+Three Section Sh3 35 

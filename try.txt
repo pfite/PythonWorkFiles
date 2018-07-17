@@ -1,0 +1,26 @@
+(command "-insert" "mast_arm" "_s" 1 (list 1.89 29.83 -8.98) 0) "part_no" 
+"manu"
+**
+(command "-insert" "upright" "_s" 1 (list -207 -284.4394 -5) 0) "part_no" 
+"manu"
+**
+(command "-view" "o" "left")
+(command "-insert" "backplate" "_s" 1 (list -235 -286 -11.84) 0) "part_no" 
+"Valmont"
+**
+(command "-view" "o" "front")
+(command "-insert" "signal_head" "_s" 1 (list -109 54.5 26.7) 0) "part_no" 
+"Pelco"
+**
+(command "-view" "o" "left")
+(command "-insert" "ped_head" "_s" 1 (list -74.4 -146.32 -20.35) 0) "part_no" 
+"Pelco"
+(command "-view" "o" "front")
+(command "-insert" "ped_head" "_s" 1 (list -47.24 -146.32 -12.8) 0) "part_no" 
+"Pelco"
+**
+text
+-1,-311
+10
+0 name
+
