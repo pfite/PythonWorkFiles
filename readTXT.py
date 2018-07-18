@@ -32,6 +32,6 @@ for j in range(0, len(BLACK_categ)):
     BLACK_parts.append(cat)
 del BLACK_parts[0]
 del GALV_parts[0]
-print(BLACK_parts[3])
+print(sorted(BLACK_parts[4]))
 
 
