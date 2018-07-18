@@ -220,7 +220,6 @@ def getVals():
     pName = pole_name.get()
     color = tkvar_color.get()
     length = tkvar_length.get()
-    up = tkvar_upright.get()
     plate = tkvar_bplate.get()
     height = pole_height.get()
     print(pName)
@@ -228,35 +227,11 @@ def getVals():
     print(length)
     print(plate)
     print(height)
-    
-    for i in range(0, len(sh_dist)):
-        thisSH = []
-        thisSH.append(sh_arr[i].get())
-        if tkvar_color.get() == 'Galv':
-            sig_galv = GALV_parts[3]
-            for j in range(0, len(sig_galv)):
-                if (str(tkvar[i].get()) + ' ') in sig_galv[j]:
-                    thisSH.append(sig_galv[j])
-        elif tkvar_color.get() == 'Black':
-            sig_black = BLACK_parts[4]
-            for k in range(0, len(sig_black)):
-                if (str(tkvar[i].get()) + ' ') in sig_black[k]:
-                    thisSH.append(sig_black[k])
 
-        thisSH.append(sh_dist[i].get())
-        SH.append(thisSH)
-        print(SH[i])
-        '''
-        print(tkvar[i].get())
-        print(sh_arr[i].get())
-        print(sh_dist[i].get())
-        '''
     mast_arm = length
-    upright = up
+    up = tkvar_upright.get()
     backplate = plate
-    signal_head = '1003-ASSY - YELLOW - 130 SIGNAL HEAD W'
     text = pName
-    dist = -120
 
     chain = []
     commands = []
@@ -281,7 +256,7 @@ def getVals():
     insert_upright[0] = line_2
     for a in range(0, len(insert_upright)):
         if insert_upright[a] == '"upright"':
-            insert_upright[a] = '"' + upright + '"'
+            insert_upright[a] = '"' + up + '"'
     chain.append(insert_upright)
 
     insert_bp = commands[2]
@@ -291,17 +266,47 @@ def getVals():
         if insert_bp[a] == '"backplate"':
             insert_bp[a] = '"' + backplate + '"'
     chain.append(insert_bp)
+    
+    for i in range(0, len(sh_dist)):
+        thisSH = []
+        thisSH.append(sh_arr[i].get())
+        if tkvar_color.get() == 'Galv':
+            sig_galv = GALV_parts[3]
+            for j in range(0, len(sig_galv)):
+                print(sh_dist[i].get())
+                dist = (int(sh_dist[i].get())*-1) + -10
+                if (str(tkvar[i].get()) + ' ') in sig_galv[j]:
+                    signal_head = sig_galv[j]
+                    insert_SH = commands[3]
+                    line_4 = insert_SH[0].replace('\n', '')
+                    insert_SH[0] = line_4
+                    for a in range(0, len(insert_SH)):
+                        if insert_SH[a] == '"signal_head"':
+                            insert_SH[a] = '"' + signal_head + '"'
+                        elif insert_SH[a] == 'num':
+                            insert_SH[a] = str(dist)
+                    chain.append(insert_SH)
+                    
+    
 
-    for i in range(0, sh_dist):
-        insert_SH = commands[3]
-        line_4 = insert_SH[0].replace('\n', '')
-        insert_SH[0] = line_4
-        for a in range(0, len(insert_SH)):
-            if insert_SH[a] == '"signal_head"':
-                insert_SH[a] = '"' + signal_head + '"'
-            elif insert_SH[a] == 'num':
-                insert_SH[a] = str(dist)
-        chain.append(insert_SH)
+                    
+        elif tkvar_color.get() == 'Black':
+            sig_black = BLACK_parts[4]
+            for k in range(0, len(sig_black)):
+                dist = (int(sh_dist[i].get())*-1) + -10
+                if (str(tkvar[i].get()) + ' ') in sig_black[k]:
+                    signal_head = sig_black[k]
+                    insert_SH = commands[3]
+                    line_4 = insert_SH[0].replace('\n', '')
+                    insert_SH[0] = line_4
+                    for a in range(0, len(insert_SH)):
+                        if insert_SH[a] == '"signal_head"':
+                            insert_SH[a] = '"' + signal_head + '"'
+                        elif insert_SH[a] == 'num':
+                            insert_SH[a] = str(dist)
+                    chain.append(insert_SH)
+
+
 
     insert_text = commands[-1]
     line_5 = insert_text[0].replace('\n', '', 1)
@@ -311,7 +316,7 @@ def getVals():
     chain.append(insert_text)
 
 
-    newFile = open('commands.scr', 'w')
+    newFile = open( pName + '.scr', 'w')
 
     for i in range(0, len(chain)):
         allCommands = chain[i]
