@@ -1,0 +1,15 @@
+(command "-insert" "1047-MAST ARM - 25FT GALV - NMPW" "_s" 1 (list 1.89 29.83 -8.98) 0) "part_no" 
+"manu"
+(command "-insert" "1073-UPRIGHT-20FT-18IN BC-MNPW-GALV" "_s" 1 (list -207 -284.4394 -5) 0) "part_no" 
+"manu"
+(command "-view" "o" "left")
+(command "-insert" "1026-BACK PLATE-MAST ARM-18.75IN" "_s" 1 (list -235 -286 -11.84) 0) "part_no" 
+"Valmont"
+(command "-view" "o" "front")
+(command "-insert" "1003-ASSY - YELLOW - 130 SIGNAL HEAD W" "_s" 1 (list -109 54.5 26.7) 0) "part_no" 
+"Pelco"
+text
+-1,-311
+10
+0 P1-45
+

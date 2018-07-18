@@ -9,7 +9,7 @@
 "Valmont"
 **
 (command "-view" "o" "front")
-(command "-insert" "signal_head" "_s" 1 (list -109 54.5 26.7) 0) "part_no" 
+(command "-insert" "signal_head" "_s" 1 (list num 54.5 26.7) 0) "part_no" 
 "Pelco"
 **
 (command "-view" "o" "left")
