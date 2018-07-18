@@ -4,6 +4,30 @@ from tkinter import *
 from tkinter.scrolledtext import ScrolledText
 
 import codecs
+
+
+
+parts = []
+f = open('C:/Users/peytonfite/Desktop/GitPush/pole_choices.txt','r')
+message = f.read()
+
+color_choice = message.split('***')
+GALV = color_choice[1]
+BLACK = color_choice[2]
+
+GALV_categ = GALV.split('**')
+BLACK_categ = BLACK.split('**')
+BLACK_parts = []
+GALV_parts = []
+
+for i in range(0, len(GALV_categ)):
+    cat = GALV_categ[i].split('\n')
+    GALV_parts.append(cat)
+for j in range(0, len(BLACK_categ)):
+    cat = BLACK_categ[j].split('\n')
+    BLACK_parts.append(cat)
+del BLACK_parts[0]
+del GALV_parts[0]
  
 root = Tk()
 root.title("Intersection Pole Generator")
@@ -21,11 +45,31 @@ SH = []
 name = ''
 color = ''
 length = ''
-rise = ''
 plate = ''
 height = ''
 
+def getMast():
+    if  tkvar_color.get() == 'Galv':
+        pole_length = GALV_parts[0]
+        pole_length[0] = ''
+    elif tkvar_color.get() == 'Black':
+        pole_length = BLACK_parts[0]
+        pole_length[0] = ''
+    else:
+        pole_length = ['']
+    return pole_length
 
+def getBP():
+    if  tkvar_color.get() == 'Galv':
+        pole_bplate = GALV_parts[2]
+        pole_bplate[0] = ''
+    elif tkvar_color.get() == 'Black':
+        pole_bplate = BLACK_parts[3]
+        print(pole_bplate)
+        pole_bplate[0] = ''
+    else:
+        pole_bplate = ['']
+    return pole_bplate
 
  
 # Add a grid
@@ -42,7 +86,6 @@ mainframe.pack(pady = 10, padx = 70)
 #row 1
 tkvar_color = StringVar(root)
 tkvar_length = StringVar(root)
-tkvar_rise = StringVar(root)
 tkvar_bplate = StringVar(root)
 tkvar_peds = StringVar(root)
 tkvar_height = StringVar(root)
@@ -55,29 +98,23 @@ ttk.Label(mainframe, text= "Pole Name").grid(row = 1, column = 0)
 pole_name.grid(row = 2, column = 0)
  
 # Dictionary with options
-pole_color = { 'Galv', 'Black'}
-tkvar_color.set('Galv') # set the default option
+pole_color = sorted({ '', 'Galv', 'Black'})
+tkvar_color.set('')  # set the default option
 popup_color = ttk.OptionMenu(mainframe, tkvar_color, *pole_color)
 ttk.Label(mainframe, text= "Pole Color").grid(row = 1, column = 1)
 popup_color.grid(row = 2, column = 1)
 
-pole_length = sorted({ '25', '30', '35', '40', '45', '50', '55'})
-tkvar_length.set('25') # set the default option
-popup_length = ttk.OptionMenu(mainframe, tkvar_length, *pole_length)
-ttk.Label(mainframe, text= "Mast Arm Length").grid(row = 1, column = 2, padx =1)
-popup_length.grid(row = 2, column = 2)
 
-pole_rise = {'5 - default', '3'}
-tkvar_rise.set('5 - default') # set the default option
-popup_rise = ttk.OptionMenu(mainframe, tkvar_rise, *pole_rise)
-ttk.Label(mainframe, text= "Mast Arm Rise").grid(row = 1, column = 3)
-popup_rise.grid(row = 2, column = 3)
- 
-pole_bplate = sorted({'18.75', '20.25', '22.25'})
-tkvar_bplate.set('18.75') # set the default option
-popup_bplate = ttk.OptionMenu(mainframe, tkvar_bplate, *pole_bplate)
+
+
+tkvar_length.set('') # set the default option
+ttk.Label(mainframe, text= "Mast Arm Length").grid(row = 1, column = 2, padx =1)
+
+
+
+tkvar_bplate.set('')
 ttk.Label(mainframe, text= "Back Plate Size - Inches").grid(row = 1, column = 4)
-popup_bplate.grid(row = 2, column = 4)
+
 
 
 pole_height = ttk.Entry(mainframe, width =8) # set the default option
@@ -98,7 +135,20 @@ def delete_lines(array):
             
 # on change dropdown value
 def change_dropdown(*args):
-    
+
+    mast = getMast()
+    tkvar_length.set('Choose Mast Arm')
+    popup_length = ttk.OptionMenu(mainframe, tkvar_length, *mast)
+    popup_length.grid_remove()
+    popup_length.grid(row = 2, column = 2)
+
+    bp = getBP()
+    tkvar_bplate.set('Choose Backplate')
+    popup_bplate = ttk.OptionMenu(mainframe, tkvar_bplate, *bp)
+    popup_bplate.grid_remove()
+    popup_bplate.grid(row = 2, column = 4)
+   
+
     delete_lines(sh_arr)
     delete_lines(sh_label)
     delete_lines(sh_popup)
@@ -113,6 +163,7 @@ def change_dropdown(*args):
     del sh_dist[:]
     del sh_dist_label[:]
 
+
             
     for i in range(0, int(tkvar_hdcnt.get())):
         sh_arr.append('sh_' + str(i + 1))
@@ -122,9 +173,9 @@ def change_dropdown(*args):
         sh_label[i].grid(row = 4 + i, column = 0)
         sh_arr[i].grid(row = 4 + i, column = 1)
 
-        sh_type.append({ 'Three Section', 'Five Section'})
+        sh_type.append(sorted({ '130', '150A4H', '130A3 Left', '130A3 Right', '140A1 Left', '140A1 Right', '150A2H Left', '150A2H Right'}))
         tkvar.append(StringVar(root))
-        tkvar[i].set('Three Section') # set the default option
+        tkvar[i].set('130') # set the default option
         sh_popup.append(OptionMenu(mainframe, tkvar[i], *sh_type[i]))
         sh_type_label.append(Label(mainframe, text= "SH Type"))
         sh_type_label[i].grid(row = 4 + i, column = 2)
@@ -143,28 +194,25 @@ def change_dropdown(*args):
  
 # link function to change dropdown
 tkvar_color.trace('w', change_dropdown)
-tkvar_length.trace('w', change_dropdown)
-tkvar_rise.trace('w', change_dropdown)
-tkvar_bplate.trace('w', change_dropdown)
 tkvar_height.trace('w', change_dropdown)
 tkvar_hdcnt.trace('w', change_dropdown)
 
 def getVals():
+    pName = pole_name.get()
     color = tkvar_color.get()
     length = tkvar_length.get()
-    rise = tkvar_rise.get()
     plate = tkvar_bplate.get()
     height = pole_height.get()
+    print(pName)
     print(color)
     print(length)
-    print(rise)
     print(plate)
     print(height)
     
     for i in range(0, len(sh_dist)):
         thisSH = []
-        thisSH.append(tkvar[i].get())
         thisSH.append(sh_arr[i].get())
+        thisSH.append(tkvar[i].get())
         thisSH.append(sh_dist[i].get())
         SH.append(thisSH)
         print(SH[i])
@@ -173,10 +221,10 @@ def getVals():
         print(sh_arr[i].get())
         print(sh_dist[i].get())
         '''
-    text_file = open("C:/Users/peytonfite/Desktop/Python/Output.txt", "w")
+    text_file = open("C:/Users/peytonfite/Desktop/GitPush/" + str(pName) + ".txt", "w")
+    text_file.write(pName + "\n")
     text_file.write(color + "\n")
     text_file.write(length + "\n")
-    text_file.write(rise + "\n")
     text_file.write(plate + "\n")
     text_file.write(height + "\n")
     for k in range(0, len(SH)):
