@@ -1,0 +1,7 @@
+(command "-view" "o" "left")
+(command "-insert" "BACK PLATE-MAST ARM-18.75IN-BLACK" "_s" 1 (list -235 -357.4 -12.9) 0) "part_no" 
+"Valmont"
+text
+-1,-311
+10
+0 ppp

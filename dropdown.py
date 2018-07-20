@@ -32,6 +32,7 @@ del GALV_parts[0]
 root = Tk()
 root.title("Intersection Pole Generator")
 
+
 sh_arr = []
 sh_label = []
 sh_type = []
@@ -46,7 +47,7 @@ name = ''
 color = ''
 length = ''
 plate = ''
-height = ''
+
 
 def getMast():
     if  tkvar_color.get() == 'Galv':
@@ -192,7 +193,7 @@ def change_dropdown(*args):
         sh_label[i].grid(row = 4 + i, column = 0)
         sh_arr[i].grid(row = 4 + i, column = 1)
 
-        sh_type.append(sorted({ '130', '130A3 LEFT', '130A3 RIGHT', '140A1 LEFT', '140A1 RIGHT', '150A2H LEFT', '150A2H RIGHTt', '150A4H'}))
+        sh_type.append(sorted({ '130', '130A3 LEFT', '130A3 RIGHT', '140A1 LEFT', '140A1 RIGHT', '150A2H LEFT', '150A2H RIGHT', '150A4H'}))
         tkvar.append(StringVar(root))
         tkvar[i].set('130') # set the default option
         sh_popup.append(OptionMenu(mainframe, tkvar[i], *sh_type[i]))
@@ -203,7 +204,7 @@ def change_dropdown(*args):
         sh_dist.append('sh_place_' + str(i + 1))
         sh_dist_label.append('sh_place_' + str(i + 1))
         sh_dist[i] = Entry(mainframe, width =8) # set the default option
-        sh_dist_label[i] = Label(mainframe, text= "Placement Distance -ft:")
+        sh_dist_label[i] = Label(mainframe, text= "Placement Distance- Inches:")
         sh_dist_label[i].grid(row = 4 + i, column = 4)
         sh_dist[i].grid(row = 4 + i, column = 5)
 
@@ -221,7 +222,7 @@ def getVals():
     color = tkvar_color.get()
     length = tkvar_length.get()
     plate = tkvar_bplate.get()
-    height = pole_height.get()
+    height = str((int(pole_height.get())*12)-10)
     print(pName)
     print(color)
     print(length)
@@ -249,6 +250,8 @@ def getVals():
     for a in range(0, len(insert_mast)):
         if insert_mast[a] == '"mast_arm"':
             insert_mast[a] = '"' + mast_arm + '"'
+        elif insert_mast[a] == 'num':
+            insert_mast[a] = height
     chain.append(insert_mast)
 
     insert_upright = commands[1]
@@ -265,50 +268,66 @@ def getVals():
     for a in range(0, len(insert_bp)):
         if insert_bp[a] == '"backplate"':
             insert_bp[a] = '"' + backplate + '"'
+        elif insert_bp[a] == 'num':
+            insert_bp[a] = height
     chain.append(insert_bp)
-    
+
+    pole_dist = []
     for i in range(0, len(sh_dist)):
-        thisSH = []
-        thisSH.append(sh_arr[i].get())
         if tkvar_color.get() == 'Galv':
             sig_galv = GALV_parts[3]
             for j in range(0, len(sig_galv)):
-                print(sh_dist[i].get())
-                dist = (int(sh_dist[i].get())*-1) + -10
+                dist = (int(sh_dist[i].get())*-1) + -18.5
                 if (str(tkvar[i].get()) + ' ') in sig_galv[j]:
+                    pole_dist.append(str(dist))
+                    thisSH = []
                     signal_head = sig_galv[j]
-                    insert_SH = commands[3]
-                    line_4 = insert_SH[0].replace('\n', '')
-                    insert_SH[0] = line_4
-                    for a in range(0, len(insert_SH)):
-                        if insert_SH[a] == '"signal_head"':
-                            insert_SH[a] = '"' + signal_head + '"'
-                        elif insert_SH[a] == 'num':
-                            insert_SH[a] = str(dist)
-                    chain.append(insert_SH)
-                    
-    
-
-                    
+                    print(signal_head)
+                    for k in range(0, len(commands[3])):
+                        sh_com = commands[3]
+                        if k == 0:
+                            thisSH.append('(command')
+                        elif k == 5:
+                            thisSH.append('"' + signal_head + '"')
+                        elif k == 9:
+                            thisSH.append(str(dist))
+                        else:
+                            thisSH.append(sh_com[k])
+                    chain.append(thisSH)
         elif tkvar_color.get() == 'Black':
             sig_black = BLACK_parts[4]
-            for k in range(0, len(sig_black)):
-                dist = (int(sh_dist[i].get())*-1) + -10
-                if (str(tkvar[i].get()) + ' ') in sig_black[k]:
-                    signal_head = sig_black[k]
-                    insert_SH = commands[3]
-                    line_4 = insert_SH[0].replace('\n', '')
-                    insert_SH[0] = line_4
-                    for a in range(0, len(insert_SH)):
-                        if insert_SH[a] == '"signal_head"':
-                            insert_SH[a] = '"' + signal_head + '"'
-                        elif insert_SH[a] == 'num':
-                            insert_SH[a] = str(dist)
-                    chain.append(insert_SH)
+            for j in range(0, len(sig_black)):
+                dist = (int(sh_dist[i].get())*-1) + -18.5
+                if (str(tkvar[i].get()) + ' ') in sig_black[j]:
+                    pole_dist.append(str(dist))
+                    thisSH = []
+                    signal_head = sig_black[j]
+                    for k in range(0, len(commands[3])):
+                        sh_com = commands[3]
+                        if k == 0:
+                            thisSH.append('(command')
+                        elif k == 5:
+                            thisSH.append('"' + signal_head + '"')
+                        elif k == 9:
+                            thisSH.append(str(dist))
+                        else:
+                            thisSH.append(sh_com[k])
+                    chain.append(thisSH)
 
+    for b in range(0, len(pole_dist)):
+        print(pole_dist[b])
+        insert_astro = commands[-1]
+        if tkvar_color.get() == 'Galv':
+            insert_astro[5] = '"ASTRO BRAC-GALV"'
+        elif tkvar_color.get() == 'Black':
+            insert_astro[5] = '"ASTRO BRAC-BLACK"'
+        insert_astro[9] = pole_dist[b]
+        chain.append(insert_astro)
 
-
-    insert_text = commands[-1]
+    print(commands[4])
+    print(commands[3])
+    insert_text = commands[5]
+    print(insert_text)
     line_5 = insert_text[0].replace('\n', '', 1)
     insert_text[0] = line_5
     newName = insert_text[-1].replace('name', text)
