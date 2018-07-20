@@ -7,16 +7,18 @@
 (command "-insert" "BACK PLATE-MAST ARM-18.75IN-1" "_s" 1 (list 14.7 158 12.22) 0) "part_no" 
 "Valmont"
 (command "-view" "o" "front")
-(command "-insert" "ASSY-YELLOW-130 SIGNAL HEAD W" "_s" 1 (list -118.5 236 3) 0) "part_no" 
+(command "-insert" "ASSY-YELLOW-130 SIGNAL HEAD W" "_s" 1 (list -88.5 236 3) 0) "part_no" 
 "Pelco"
 (command "-view" "o" "front")
-(command "-insert" "ASSY-YELLOW-130 SIGNAL HEAD W" "_s" 1 (list -268.5 236 3) 0) "part_no" 
+(command "-insert" "ASSY-YELLOW-130 SIGNAL HEAD W" "_s" 1 (list -168.5 236 3) 0) "part_no" 
 "Pelco"
 (command "-view" "o" "front")
-(command "-insert" "ASTRO BRAC-GALV" "_s" 1 (list -118.5 260 0) 0) "part_no" 
-"Pelco"(command "-view" "o" "front")
-(command "-insert" "ASTRO BRAC-GALV" "_s" 1 (list -118.5 260 0) 0) "part_no" 
-"Pelco"text
+(command "-insert" "ASTRO BRAC-GALV" "_s" 1 (list -168.5 260 0) 0) "part_no" 
+"Pelco"
+(command "-view" "o" "front")
+(command "-insert" "ASTRO BRAC-GALV" "_s" 1 (list -168.5 260 0) 0) "part_no" 
+"Pelco"
+text
 3,-20
 10
-0 P-69
+0 Pg

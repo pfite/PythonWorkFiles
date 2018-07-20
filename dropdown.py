@@ -313,21 +313,25 @@ def getVals():
                         else:
                             thisSH.append(sh_com[k])
                     chain.append(thisSH)
-
+    bracs = []
     for b in range(0, len(pole_dist)):
-        print(pole_dist[b])
+        bracs.append('')
+        bracs[-1] = pole_dist[b]
         insert_astro = commands[-1]
+        insert_astro[9] = bracs[-1]
         if tkvar_color.get() == 'Galv':
             insert_astro[5] = '"ASTRO BRAC-GALV"'
+            chain.append(insert_astro)
+            del bracs[:]
         elif tkvar_color.get() == 'Black':
             insert_astro[5] = '"ASTRO BRAC-BLACK"'
-        insert_astro[9] = pole_dist[b]
-        chain.append(insert_astro)
+            bracs[b] = insert_astro
+            chain.append(bracs[b])
+            
+        
+        
 
-    print(commands[4])
-    print(commands[3])
     insert_text = commands[5]
-    print(insert_text)
     line_5 = insert_text[0].replace('\n', '', 1)
     insert_text[0] = line_5
     newName = insert_text[-1].replace('name', text)
