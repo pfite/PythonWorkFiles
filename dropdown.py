@@ -91,7 +91,7 @@ mainframe.columnconfigure(0, weight = 1)
 mainframe.rowconfigure(0, weight = 1)
 mainframe.pack(pady = 10, padx = 70)
 
-#root.iconbitmap('sec.ico')
+root.iconbitmap('sec.ico')
  
 # Create a Tkinter variable
 
@@ -100,9 +100,9 @@ tkvar_color = StringVar(root)
 tkvar_length = StringVar(root)
 tkvar_upright = StringVar(root)
 tkvar_bplate = StringVar(root)
-tkvar_peds = StringVar(root)
 tkvar_height = StringVar(root)
 tkvar_hdcnt = StringVar(root)
+tkvar_ped = StringVar(root)
 
 
 
@@ -134,6 +134,12 @@ ttk.Label(mainframe, text= "Back Plate Size - Inches").grid(row = 1, column = 5)
 pole_height = ttk.Entry(mainframe, width =8) # set the default option
 ttk.Label(mainframe, text= "Mast Arm Height -ft").grid(row = 1, column = 6, padx = 12)
 pole_height.grid(row = 2, column = 6)
+
+ped_type = sorted({ '', 'Drilled Left', 'Drilled Right'})
+tkvar_ped.set('')  # set the default option
+popup_ped = ttk.OptionMenu(mainframe, tkvar_ped, *ped_type)
+ttk.Label(mainframe, text= "Ped Heads").grid(row = 1, column = 7)
+popup_ped.grid(row = 2, column = 7)
 
 pole_hdcnt = sorted({'0','1', '2', '3', '4', '5' })
 tkvar_hdcnt.set('0') # set the default option
@@ -272,6 +278,29 @@ def getVals():
             insert_bp[a] = height
     chain.append(insert_bp)
 
+    peds = ''
+    print(tkvar_ped.get())
+    if tkvar_ped.get() == "Drilled Left":
+        insert_ped = commands[4]
+    elif tkvar_ped.get() == "Drilled Right":
+        insert_ped = commands[5]
+    line_6 = insert_ped[0].replace('\n', '')
+    insert_upright[0] = line_6
+    if tkvar_color.get() == 'Galv':
+        if tkvar_ped.get() == "Drilled Left":
+            peds = 'PEDESTRIAN SIGNAL HEAD-YELLOW-DRILLED LEFT'
+        elif tkvar_ped.get() == "Drilled Right":
+            peds = 'PEDESTRIAN SIGNAL HEAD-YELLOW-DRILLED RIGHT'
+    elif tkvar_color.get() == 'Black':
+        if tkvar_ped.get() == "Drilled Left":
+            peds = 'PEDESTRIAN SIGNAL HEAD-BLACK-DRILLED LEFT'
+        elif tkvar_ped.get() == "Drilled Right":
+            peds = 'PEDESTRIAN SIGNAL HEAD-BLACK-DRILLED RIGHT'
+    for a in range(0, len(insert_ped)):
+        if insert_ped[a] == '"ped_head"':
+            insert_ped[a] = '"' + peds + '"'
+    chain.append(insert_ped)
+
     pole_dist = []
     for i in range(0, len(sh_dist)):
         if tkvar_color.get() == 'Galv':
@@ -281,19 +310,26 @@ def getVals():
                 if (str(tkvar[i].get()) + ' ') in sig_galv[j]:
                     pole_dist.append(str(dist))
                     thisSH = []
+                    thisAstro = []
                     signal_head = sig_galv[j]
                     print(signal_head)
                     for k in range(0, len(commands[3])):
                         sh_com = commands[3]
+                        insert_astro = commands[-1]
                         if k == 0:
                             thisSH.append('(command')
+                            thisAstro.append('(command')
                         elif k == 5:
                             thisSH.append('"' + signal_head + '"')
+                            thisAstro.append('"ASTRO BRAC-GALV"')
                         elif k == 9:
                             thisSH.append(str(dist))
+                            thisAstro.append(str(dist))
                         else:
                             thisSH.append(sh_com[k])
+                            thisAstro.append(insert_astro[k])
                     chain.append(thisSH)
+                    chain.append(thisAstro)
         elif tkvar_color.get() == 'Black':
             sig_black = BLACK_parts[4]
             for j in range(0, len(sig_black)):
@@ -301,37 +337,29 @@ def getVals():
                 if (str(tkvar[i].get()) + ' ') in sig_black[j]:
                     pole_dist.append(str(dist))
                     thisSH = []
+                    thisAstro = []
                     signal_head = sig_black[j]
                     for k in range(0, len(commands[3])):
                         sh_com = commands[3]
+                        insert_astro = commands[-1]
                         if k == 0:
                             thisSH.append('(command')
+                            thisAstro.append('(command')
                         elif k == 5:
                             thisSH.append('"' + signal_head + '"')
+                            thisAstro.append('"ASTRO BRAC-BLACK"')
                         elif k == 9:
                             thisSH.append(str(dist))
+                            thisAstro.append(str(dist))
                         else:
                             thisSH.append(sh_com[k])
                     chain.append(thisSH)
-    bracs = []
-    for b in range(0, len(pole_dist)):
-        bracs.append('')
-        bracs[-1] = pole_dist[b]
-        insert_astro = commands[-1]
-        insert_astro[9] = bracs[-1]
-        if tkvar_color.get() == 'Galv':
-            insert_astro[5] = '"ASTRO BRAC-GALV"'
-            chain.append(insert_astro)
-            del bracs[:]
-        elif tkvar_color.get() == 'Black':
-            insert_astro[5] = '"ASTRO BRAC-BLACK"'
-            bracs[b] = insert_astro
-            chain.append(bracs[b])
-            
+                    chain.append(thisAstro)
+
         
         
 
-    insert_text = commands[5]
+    insert_text = commands[6]
     line_5 = insert_text[0].replace('\n', '', 1)
     insert_text[0] = line_5
     newName = insert_text[-1].replace('name', text)
@@ -362,7 +390,7 @@ def getVals():
 
 
 b = ttk.Button(mainframe, text="Generate CAD Script", command = getVals)
-b.grid(column = 3, columnspan = 2, row = 10)
+b.grid(column = 4, columnspan = 1, row = 10, pady = 12)
 
 
 
