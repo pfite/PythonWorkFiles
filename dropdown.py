@@ -3,6 +3,7 @@ from tkinter import ttk
 from tkinter import * 
 from tkinter.scrolledtext import ScrolledText
 from PIL import Image, ImageTk
+import time 
 
 
 import codecs
@@ -34,9 +35,11 @@ del GALV_parts[0]
 root = Tk()
 root.title("Intersection Pole Generator")
 
-#def finished(file):
-    #logo = PhotoImage(file="stuff.gif")
-    #Label(mainframe, image = logo).grid(row = 11, column = 1)
+def finished():
+    ttk.Label(mainframe, text = "Finished!").grid(row = 11, column = 1)
+    
+
+
 
 sh_arr = []
 sh_label = []
@@ -385,7 +388,7 @@ def getVals():
                 newFile.write(allCommands[j] + ' ')
 
     newFile.close()
-    #finished(pName)
+    finished()
 
 
 

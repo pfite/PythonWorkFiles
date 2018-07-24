@@ -1,0 +1,24 @@
+(command "-view" "o" "front")
+(command "-insert" "MAST ARM-30FT BLACK-NMPW" "_s" 1 (list 1.7 182 4) 0) 
+(command "-view" "o" "left")
+(command "-insert" "UPRIGHT-20FT-18IN BC-MNPW-BLACK" "_s" 1 (list 0.99 0 0.23) 0) "part_no" 
+"manu"
+(command "-view" "o" "right")
+(command "-insert" "BACK PLATE-MAST ARM-18.75IN-BLACK-1027" "_s" 1 (list 14.87 182 12) 0) "part_no" 
+"Valmont"
+(command "-view" "o" "left")
+(command "-insert" "PEDESTRIAN SIGNAL HEAD-BLACK-DRILLED RIGHT" "_s" 1 (list -10 108 -7) 0) "part_no" 
+"Pelco"
+(command "-view" "o" "front")
+(command "-insert" "PEDESTRIAN SIGNAL HEAD-BLACK-DRILLED RIGHT" "_s" 1 (list 3.5 108 -4) 0) "part_no" 
+"Pelco"
+(command "-view" "o" "front")
+(command "-insert" "ASSY-BLACK-130 SIGNAL HEAD W" "_s" 1 (list -118.5 236 10) 0) "part_no" 
+"Pelco"
+(command "-view" "o" "front")
+(command "-insert" "ASTRO BRAC-BLACK" "_s" 1 (list -118.5 260 0) 0) "part_no" 
+"Pelco"
+text
+-5,-20
+10
+0 PPP
