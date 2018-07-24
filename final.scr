@@ -1,9 +1,0 @@
-(command "-view" "o" "front"
-"-insert" "ASSY-BLACK-130A3 RIGHT SIGNAL HEAD W" "_s" 1 (list -118.1 54.5 26.7) 0)
-"-view" "o" "front"
-"-insert" "ASSY-BLACK-150A2H LEFT SIGNAL HEAD W" "_s" 1 (list -268.1 54.5 26.7) 0) 
-text 
--1,-311 
-10 
-0 final)
-

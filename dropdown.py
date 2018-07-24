@@ -2,6 +2,8 @@ import tkinter
 from tkinter import ttk
 from tkinter import * 
 from tkinter.scrolledtext import ScrolledText
+from PIL import Image, ImageTk
+
 
 import codecs
 
@@ -32,6 +34,9 @@ del GALV_parts[0]
 root = Tk()
 root.title("Intersection Pole Generator")
 
+#def finished(file):
+    #logo = PhotoImage(file="stuff.gif")
+    #Label(mainframe, image = logo).grid(row = 11, column = 1)
 
 sh_arr = []
 sh_label = []
@@ -135,7 +140,7 @@ pole_height = ttk.Entry(mainframe, width =8) # set the default option
 ttk.Label(mainframe, text= "Mast Arm Height -ft").grid(row = 1, column = 6, padx = 12)
 pole_height.grid(row = 2, column = 6)
 
-ped_type = sorted({ '', 'Drilled Left', 'Drilled Right'})
+ped_type = sorted({ '', 'Drilled Left', 'Drilled Right', 'None'})
 tkvar_ped.set('')  # set the default option
 popup_ped = ttk.OptionMenu(mainframe, tkvar_ped, *ped_type)
 ttk.Label(mainframe, text= "Ped Heads").grid(row = 1, column = 7)
@@ -280,26 +285,27 @@ def getVals():
 
     peds = ''
     print(tkvar_ped.get())
-    if tkvar_ped.get() == "Drilled Left":
-        insert_ped = commands[4]
-    elif tkvar_ped.get() == "Drilled Right":
-        insert_ped = commands[5]
-    line_6 = insert_ped[0].replace('\n', '')
-    insert_upright[0] = line_6
-    if tkvar_color.get() == 'Galv':
+    if tkvar_ped.get() != 'None':
         if tkvar_ped.get() == "Drilled Left":
-            peds = 'PEDESTRIAN SIGNAL HEAD-YELLOW-DRILLED LEFT'
+            insert_ped = commands[4]
         elif tkvar_ped.get() == "Drilled Right":
-            peds = 'PEDESTRIAN SIGNAL HEAD-YELLOW-DRILLED RIGHT'
-    elif tkvar_color.get() == 'Black':
-        if tkvar_ped.get() == "Drilled Left":
-            peds = 'PEDESTRIAN SIGNAL HEAD-BLACK-DRILLED LEFT'
-        elif tkvar_ped.get() == "Drilled Right":
-            peds = 'PEDESTRIAN SIGNAL HEAD-BLACK-DRILLED RIGHT'
-    for a in range(0, len(insert_ped)):
-        if insert_ped[a] == '"ped_head"':
-            insert_ped[a] = '"' + peds + '"'
-    chain.append(insert_ped)
+            insert_ped = commands[5]
+        line_6 = insert_ped[0].replace('\n', '')
+        insert_upright[0] = line_6
+        if tkvar_color.get() == 'Galv':
+            if tkvar_ped.get() == "Drilled Left":
+                peds = 'PEDESTRIAN SIGNAL HEAD-YELLOW-DRILLED LEFT'
+            elif tkvar_ped.get() == "Drilled Right":
+                peds = 'PEDESTRIAN SIGNAL HEAD-YELLOW-DRILLED RIGHT'
+        elif tkvar_color.get() == 'Black':
+            if tkvar_ped.get() == "Drilled Left":
+                peds = 'PEDESTRIAN SIGNAL HEAD-BLACK-DRILLED LEFT'
+            elif tkvar_ped.get() == "Drilled Right":
+                peds = 'PEDESTRIAN SIGNAL HEAD-BLACK-DRILLED RIGHT'
+        for a in range(0, len(insert_ped)):
+            if insert_ped[a] == '"ped_head"':
+                insert_ped[a] = '"' + peds + '"'
+        chain.append(insert_ped)
 
     pole_dist = []
     for i in range(0, len(sh_dist)):
@@ -353,6 +359,7 @@ def getVals():
                             thisAstro.append(str(dist))
                         else:
                             thisSH.append(sh_com[k])
+                            thisAstro.append(insert_astro[k])
                     chain.append(thisSH)
                     chain.append(thisAstro)
 
@@ -378,6 +385,9 @@ def getVals():
                 newFile.write(allCommands[j] + ' ')
 
     newFile.close()
+    #finished(pName)
+
+
 
 
 
