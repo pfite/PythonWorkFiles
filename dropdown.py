@@ -56,7 +56,7 @@ root = Tk()
 root.title("Intersection Pole Generator 1.0")
 
 def finished(file):
-    ttk.Label(mainframe, text = "Finished Generating " + file + " script!").grid(row = 11, column = 1)
+    ttk.Label(mainframe, text = "Finished Generating " + file + " Script!", font='Helvetica 12 bold').grid(row = 11, column = 4)
     
 
 
