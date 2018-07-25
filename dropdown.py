@@ -2,17 +2,37 @@ import tkinter
 from tkinter import ttk
 from tkinter import * 
 from tkinter.scrolledtext import ScrolledText
-from PIL import Image, ImageTk
-import time 
-
-
+import os
 import codecs
 
-
+initPath = os.getcwd()
+if getattr(sys, 'frozen', False):
+    os.chdir(sys._MEIPASS)
 
 parts = []
 f = open('pole_choices.txt','r')
 message = f.read()
+
+x = open('parts.txt','r')
+x_message = x.read()
+
+parts = x_message.split('\n')
+x.close()
+
+y = open('partno.txt','r')
+y_message = y.read()
+
+partno = y_message.split('\n')
+y.close()
+
+z = open('manu.txt','r')
+z_message = z.read()
+
+manu = z_message.split('\n')
+z.close()
+
+searchPart = dict(zip(parts, partno))
+searchManu = dict(zip(parts, manu))
 
 color_choice = message.split('***')
 GALV = color_choice[1]
@@ -33,10 +53,10 @@ del BLACK_parts[0]
 del GALV_parts[0]
  
 root = Tk()
-root.title("Intersection Pole Generator")
+root.title("Intersection Pole Generator 1.0")
 
-def finished():
-    ttk.Label(mainframe, text = "Finished!").grid(row = 11, column = 1)
+def finished(file):
+    ttk.Label(mainframe, text = "Finished Generating " + file + " script!").grid(row = 11, column = 1)
     
 
 
@@ -250,7 +270,7 @@ def getVals():
 
     chain = []
     commands = []
-    f = open('C:/Users/peytonfite/Desktop/GitPush/try.txt','r')
+    f = open('try.txt','r')
     message = f.read()
     f.close()
 
@@ -266,14 +286,19 @@ def getVals():
             insert_mast[a] = '"' + mast_arm + '"'
         elif insert_mast[a] == 'num':
             insert_mast[a] = height
+        elif insert_mast[a] == 'part_no':
+            insert_mast[a] = searchPart[mast_arm]
     chain.append(insert_mast)
 
     insert_upright = commands[1]
     line_2 = insert_upright[0].replace('\n', '')
     insert_upright[0] = line_2
+    print(searchPart[up])
     for a in range(0, len(insert_upright)):
         if insert_upright[a] == '"upright"':
             insert_upright[a] = '"' + up + '"'
+        elif insert_upright[a] == 'part_no':
+            insert_upright[a] = searchPart[up]
     chain.append(insert_upright)
 
     insert_bp = commands[2]
@@ -376,7 +401,7 @@ def getVals():
     insert_text[-1] = newName
     chain.append(insert_text)
 
-
+    os.chdir(initPath)
     newFile = open( pName + '.scr', 'w')
 
     for i in range(0, len(chain)):
@@ -388,7 +413,9 @@ def getVals():
                 newFile.write(allCommands[j] + ' ')
 
     newFile.close()
-    finished()
+    finished(pName)
+    if getattr(sys, 'frozen', False):
+        os.chdir(sys._MEIPASS)
 
 
 

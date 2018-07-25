@@ -1,10 +1,10 @@
 (command "-view" "o" "front")
-(command "-insert" "MAST ARM-30FT BLACK-NMPW" "_s" 1 (list 1.7 182 4) 0) 
+(command "-insert" "MAST ARM-25FT BLACK-NMPW" "_s" 1 (list 1.7 110 4) 0) 
 (command "-view" "o" "left")
 (command "-insert" "UPRIGHT-20FT-18IN BC-MNPW-BLACK" "_s" 1 (list 0.99 0 0.23) 0) "part_no" 
 "manu"
 (command "-view" "o" "right")
-(command "-insert" "BACK PLATE-MAST ARM-18.75IN-BLACK-1027" "_s" 1 (list 14.87 182 12) 0) "part_no" 
+(command "-insert" "BACK PLATE-MAST ARM-18.75IN-BLACK-1027" "_s" 1 (list 14.87 110 12) 0) "part_no" 
 "Valmont"
 (command "-view" "o" "left")
 (command "-insert" "PEDESTRIAN SIGNAL HEAD-BLACK-DRILLED LEFT" "_s" 1 (list 0 108 -11) 0) "part_no" 
@@ -21,4 +21,4 @@
 text
 -5,-20
 10
-0 P-D
+0 1003
