@@ -2,11 +2,11 @@
 (command "-insert" "mast_arm" "_s" 1 (list 1.7 num 4) 0) 
 **
 (command "-view" "o" "left")
-(command "-insert" "upright" "_s" 1 (list 0.99 0 0.23) 0) "part_no" 
+(command "-insert" "upright" "_s" 1 (list 0.96 0 -0.33) 0) "part_no" 
 "manu"
 **
 (command "-view" "o" "right")
-(command "-insert" "backplate" "_s" 1 (list 14.87 num -13) 0) "part_no" 
+(command "-insert" "backplate" "_s" 1 (list 14.87 num 13) 0) "part_no" 
 "Valmont"
 **
 (command "-view" "o" "front")
