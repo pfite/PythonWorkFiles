@@ -286,19 +286,18 @@ def getVals():
             insert_mast[a] = '"' + mast_arm + '"'
         elif insert_mast[a] == 'num':
             insert_mast[a] = height
-        elif insert_mast[a] == 'part_no':
-            insert_mast[a] = searchPart[mast_arm]
+        elif insert_mast[a] == '"part_no"':
+            insert_mast[a] = '"' + searchPart[mast_arm] + '"'
     chain.append(insert_mast)
 
     insert_upright = commands[1]
     line_2 = insert_upright[0].replace('\n', '')
     insert_upright[0] = line_2
-    print(searchPart[up])
     for a in range(0, len(insert_upright)):
         if insert_upright[a] == '"upright"':
             insert_upright[a] = '"' + up + '"'
-        elif insert_upright[a] == 'part_no':
-            insert_upright[a] = searchPart[up]
+        elif insert_upright[a] == '"part_no"':
+            insert_upright[a] = '"' + searchPart[up] + '"'
     chain.append(insert_upright)
 
     insert_bp = commands[2]
@@ -309,10 +308,12 @@ def getVals():
             insert_bp[a] = '"' + backplate + '"'
         elif insert_bp[a] == 'num':
             insert_bp[a] = height
+        elif insert_bp[a] == '"part_no"':
+            print(a)
+            insert_bp[a] = '"' + searchPart[backplate] + '"'
     chain.append(insert_bp)
 
     peds = ''
-    print(tkvar_ped.get())
     if tkvar_ped.get() != 'None':
         if tkvar_ped.get() == "Drilled Left":
             insert_ped = commands[4]
@@ -333,6 +334,8 @@ def getVals():
         for a in range(0, len(insert_ped)):
             if insert_ped[a] == '"ped_head"':
                 insert_ped[a] = '"' + peds + '"'
+            elif insert_ped[a] == '"part_no"':
+                insert_ped[a] = '"' + searchPart[peds] + '"'
         chain.append(insert_ped)
 
     pole_dist = []
@@ -340,7 +343,7 @@ def getVals():
         if tkvar_color.get() == 'Galv':
             sig_galv = GALV_parts[3]
             for j in range(0, len(sig_galv)):
-                dist = (int(round((int(sh_dist[i].get())*-1) + 20.93)))
+                dist = (int(round((int(sh_dist[i].get())*-1) + 2)))
                 if (str(tkvar[i].get()) + ' ') in sig_galv[j]:
                     pole_dist.append(str(dist))
                     thisSH = []
@@ -359,6 +362,9 @@ def getVals():
                         elif k == 9:
                             thisSH.append(str(dist))
                             thisAstro.append(str(dist))
+                        elif k == 13:
+                            thisSH.append('"'+searchPart[signal_head]+'"')
+                            thisAstro.append('"1021"')
                         else:
                             thisSH.append(sh_com[k])
                             thisAstro.append(insert_astro[k])
@@ -367,7 +373,7 @@ def getVals():
         elif tkvar_color.get() == 'Black':
             sig_black = BLACK_parts[4]
             for j in range(0, len(sig_black)):
-                dist = (int(round((int(sh_dist[i].get())*-1) + 20.93)))
+                dist = (int(round((int(sh_dist[i].get())*-1) + 2)))
                 if (str(tkvar[i].get()) + ' ') in sig_black[j]:
                     pole_dist.append(str(dist))
                     thisSH = []
@@ -385,6 +391,9 @@ def getVals():
                         elif k == 9:
                             thisSH.append(str(dist))
                             thisAstro.append(str(dist))
+                        elif k == 13:
+                            thisSH.append('"'+searchPart[signal_head]+'"')
+                            thisAstro.append('"1020"')
                         else:
                             thisSH.append(sh_com[k])
                             thisAstro.append(insert_astro[k])

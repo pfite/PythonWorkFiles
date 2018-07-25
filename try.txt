@@ -3,7 +3,7 @@
 **
 (command "-view" "o" "left")
 (command "-insert" "upright" "_s" 1 (list 0.96 0 -0.33) 0) "part_no" 
-"manu"
+"Valmont"
 **
 (command "-view" "o" "right")
 (command "-insert" "backplate" "_s" 1 (list 14.87 num 13) 0) "part_no" 
