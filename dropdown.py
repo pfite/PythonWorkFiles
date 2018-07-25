@@ -135,44 +135,44 @@ tkvar_ped = StringVar(root)
 
 
 pole_name = ttk.Entry(mainframe, width =8) # set the default option
-ttk.Label(mainframe, text= "Pole Name").grid(row = 1, column = 0)
+ttk.Label(mainframe, text= "Pole Name", font='Helvetica 9 bold').grid(row = 1, column = 0, padx = 10)
 pole_name.grid(row = 2, column = 0)
  
 # Dictionary with options
 pole_color = sorted({ '', 'Galv', 'Black'})
 tkvar_color.set('')  # set the default option
 popup_color = ttk.OptionMenu(mainframe, tkvar_color, *pole_color)
-ttk.Label(mainframe, text= "Pole Color").grid(row = 1, column = 2)
+ttk.Label(mainframe, text= "Pole Color", font='Helvetica 9 bold').grid(row = 1, column = 2)
 popup_color.grid(row = 2, column = 2)
 
 
 
 
 tkvar_length.set('') # set the default option
-ttk.Label(mainframe, text= "Mast Arm Length").grid(row = 1, column = 3, padx =1)
+ttk.Label(mainframe, text= "Mast Arm Length", font='Helvetica 9 bold').grid(row = 1, column = 3, padx =5)
 
 tkvar_upright.set('')
-ttk.Label(mainframe, text= "Upright").grid(row = 1, column = 4)
+ttk.Label(mainframe, text= "Upright", font='Helvetica 9 bold').grid(row = 1, column = 4)
 
 tkvar_bplate.set('')
-ttk.Label(mainframe, text= "Back Plate Size - Inches").grid(row = 1, column = 5)
+ttk.Label(mainframe, text= "Back Plate Size - Inches", font='Helvetica 9 bold').grid(row = 1, column = 5)
 
 
 
 pole_height = ttk.Entry(mainframe, width =8) # set the default option
-ttk.Label(mainframe, text= "Mast Arm Height -ft").grid(row = 1, column = 6, padx = 12)
+ttk.Label(mainframe, text= "Mast Arm Height -ft", font='Helvetica 9 bold').grid(row = 1, column = 6, padx = 12)
 pole_height.grid(row = 2, column = 6)
 
 ped_type = sorted({ '', 'Drilled Left', 'Drilled Right', 'None'})
 tkvar_ped.set('')  # set the default option
 popup_ped = ttk.OptionMenu(mainframe, tkvar_ped, *ped_type)
-ttk.Label(mainframe, text= "Ped Heads").grid(row = 1, column = 7)
+ttk.Label(mainframe, text= "Ped Heads", font='Helvetica 9 bold').grid(row = 1, column = 7)
 popup_ped.grid(row = 2, column = 7)
 
 pole_hdcnt = sorted({'0','1', '2', '3', '4', '5' })
 tkvar_hdcnt.set('0') # set the default option
 popup_hdcnt = ttk.OptionMenu(mainframe, tkvar_hdcnt, *pole_hdcnt)
-ttk.Label(mainframe, text= "SH Count").grid(row = 1, column = 1)
+ttk.Label(mainframe, text= "SH Count", font='Helvetica 9 bold').grid(row = 1, column = 1, padx =5)
 popup_hdcnt.grid(row = 2, column = 1)
 
 def delete_lines(array):
@@ -203,7 +203,7 @@ def change_dropdown(*args):
     popup_bplate.grid(row = 2, column = 5)
    
 
-    delete_lines(sh_arr)
+    #delete_lines(sh_arr)
     delete_lines(sh_label)
     delete_lines(sh_popup)
     delete_lines(sh_type_label)
@@ -220,18 +220,18 @@ def change_dropdown(*args):
 
             
     for i in range(0, int(tkvar_hdcnt.get())):
-        sh_arr.append('sh_' + str(i + 1))
+        #sh_arr.append('sh_' + str(i + 1))
         sh_label.append('sh_' + str(i + 1))
-        sh_arr[i] = Entry(mainframe, width =8) # set the default option
-        sh_label[i] = Label(mainframe, text= "SH " + str(i + 1) + " Name")
-        sh_label[i].grid(row = 4 + i, column = 0)
-        sh_arr[i].grid(row = 4 + i, column = 1)
+        #sh_arr[i] = Entry(mainframe, width =8) # set the default option
+        sh_label[i] = Label(mainframe, text= "SH " + str(i + 1), font='Helvetica 9 bold')
+        sh_label[i].grid(row = 4 + i, column = 1)
+        #sh_arr[i].grid(row = 4 + i, column = 1)
 
         sh_type.append(sorted({ '130', '130A3 LEFT', '130A3 RIGHT', '140A1 LEFT', '140A1 RIGHT', '150A2H LEFT', '150A2H RIGHT', '150A4H'}))
         tkvar.append(StringVar(root))
         tkvar[i].set('130') # set the default option
         sh_popup.append(OptionMenu(mainframe, tkvar[i], *sh_type[i]))
-        sh_type_label.append(Label(mainframe, text= "SH Type"))
+        sh_type_label.append(Label(mainframe, text= "SH Type:"))
         sh_type_label[i].grid(row = 4 + i, column = 2)
         sh_popup[i].grid(row = 4 + i, column = 3)
 
@@ -340,7 +340,7 @@ def getVals():
         if tkvar_color.get() == 'Galv':
             sig_galv = GALV_parts[3]
             for j in range(0, len(sig_galv)):
-                dist = (int(sh_dist[i].get())*-1) + -18.5
+                dist = (int(round((int(sh_dist[i].get())*-1) + 20.93)))
                 if (str(tkvar[i].get()) + ' ') in sig_galv[j]:
                     pole_dist.append(str(dist))
                     thisSH = []
@@ -367,7 +367,7 @@ def getVals():
         elif tkvar_color.get() == 'Black':
             sig_black = BLACK_parts[4]
             for j in range(0, len(sig_black)):
-                dist = (int(sh_dist[i].get())*-1) + -18.5
+                dist = (int(round((int(sh_dist[i].get())*-1) + 20.93)))
                 if (str(tkvar[i].get()) + ' ') in sig_black[j]:
                     pole_dist.append(str(dist))
                     thisSH = []
