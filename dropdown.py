@@ -56,7 +56,7 @@ root = Tk()
 root.title("Intersection Pole Generator 1.0")
 
 def finished(file):
-    ttk.Label(mainframe, text = "Finished Generating " + file + " Script!", font='Helvetica 12 bold').grid(row = 11, column = 4)
+    ttk.Label(mainframe, text = "Finished Generating " + file + " Script!", relief = RAISED,  foreground = "dark green" ,font='Helvetica 12 bold').grid(row = 11, column = 4)
     
 
 
@@ -120,7 +120,7 @@ mainframe.rowconfigure(0, weight = 1)
 mainframe.pack(pady = 10, padx = 70)
 
 root.iconbitmap('sec.ico')
- 
+
 # Create a Tkinter variable
 
 #row 1
@@ -254,7 +254,7 @@ tkvar_hdcnt.trace('w', change_dropdown)
 def getVals():
     pName = pole_name.get()
     color = tkvar_color.get()
-    length = tkvar_length.get()
+    length = str(tkvar_length.get())
     plate = tkvar_bplate.get()
     height = str((int(pole_height.get())*12)-10)
     print(pName)
@@ -262,6 +262,8 @@ def getVals():
     print(length)
     print(plate)
     print(height)
+
+    print(length[9:11])
 
     mast_arm = length
     up = tkvar_upright.get()
@@ -286,8 +288,8 @@ def getVals():
             insert_mast[a] = '"' + mast_arm + '"'
         elif insert_mast[a] == 'num':
             insert_mast[a] = height
-        elif insert_mast[a] == '"part_no"':
-            insert_mast[a] = '"' + searchPart[mast_arm] + '"'
+        elif insert_mast[a] == 'part_no':
+            insert_mast[a] = searchPart[mast_arm]
     chain.append(insert_mast)
 
     insert_upright = commands[1]
@@ -296,8 +298,8 @@ def getVals():
     for a in range(0, len(insert_upright)):
         if insert_upright[a] == '"upright"':
             insert_upright[a] = '"' + up + '"'
-        elif insert_upright[a] == '"part_no"':
-            insert_upright[a] = '"' + searchPart[up] + '"'
+        elif insert_upright[a] == '\npart_no\n':
+            insert_upright[a] = '\n' + searchPart[up] + '\n'
     chain.append(insert_upright)
 
     insert_bp = commands[2]
@@ -308,9 +310,8 @@ def getVals():
             insert_bp[a] = '"' + backplate + '"'
         elif insert_bp[a] == 'num':
             insert_bp[a] = height
-        elif insert_bp[a] == '"part_no"':
-            print(a)
-            insert_bp[a] = '"' + searchPart[backplate] + '"'
+        elif insert_bp[a] == '\npart_no\n':
+            insert_bp[a] = '\n' + searchPart[backplate] + '\n'
     chain.append(insert_bp)
 
     peds = ''
@@ -334,8 +335,16 @@ def getVals():
         for a in range(0, len(insert_ped)):
             if insert_ped[a] == '"ped_head"':
                 insert_ped[a] = '"' + peds + '"'
-            elif insert_ped[a] == '"part_no"':
-                insert_ped[a] = '"' + searchPart[peds] + '"'
+            elif insert_ped[a] == 'part_no':
+                insert_ped[a] == searchPart[peds]
+            elif insert_ped[a] == 'part_no\n':
+                insert_ped[a] == searchPart[peds] + '\n'
+            elif insert_ped[a] == '\npart_no\n':
+                insert_ped[a] == '\n' + searchPart[peds] + '\n'
+        print(insert_ped)
+        insert_ped[14] = '\n' + searchPart[peds]
+        insert_ped[-1] = '\n' + searchPart[peds] + '\n'
+
         chain.append(insert_ped)
 
     pole_dist = []
@@ -362,9 +371,9 @@ def getVals():
                         elif k == 9:
                             thisSH.append(str(dist))
                             thisAstro.append(str(dist))
-                        elif k == 13:
-                            thisSH.append('"'+searchPart[signal_head]+'"')
-                            thisAstro.append('"1021"')
+                        elif k == 14:
+                            thisSH.append('\n' + searchPart[signal_head] + '\n')
+                            thisAstro.append( '\n' +'1021' + '\n')
                         else:
                             thisSH.append(sh_com[k])
                             thisAstro.append(insert_astro[k])
@@ -391,9 +400,9 @@ def getVals():
                         elif k == 9:
                             thisSH.append(str(dist))
                             thisAstro.append(str(dist))
-                        elif k == 13:
-                            thisSH.append('"'+searchPart[signal_head]+'"')
-                            thisAstro.append('"1020"')
+                        elif k == 14:
+                            thisSH.append('\n' + searchPart[signal_head] + '\n')
+                            thisAstro.append('\n' + '1020' + '\n')
                         else:
                             thisSH.append(sh_com[k])
                             thisAstro.append(insert_astro[k])
@@ -430,17 +439,8 @@ def getVals():
 
 
 
-
-
-    
-
-        
-
-
-
-b = ttk.Button(mainframe, text="Generate CAD Script", command = getVals)
+b = ttk.Button(mainframe,text="Generate CAD Script", command = getVals)
 b.grid(column = 4, columnspan = 1, row = 10, pady = 12)
-
 
 
                

@@ -1,0 +1,25 @@
+(command "-view" "o" "front")
+(command "-insert" "MAST ARM-25FT GALV-NMPW" "_s" 1 (list 1.7 182 4) 0) 1047 
+Valmont
+(command "-view" "o" "left")
+(command "-insert" "UPRIGHT-20FT-18IN BC-MNPW-GALV" "_s" 1 (list -14.4 0 -3.08) 0) Valmont 
+1133
+(command "-view" "o" "right")
+(command "-insert" "BACK PLATE-MAST ARM-18.75IN-1026" "_s" 1 (list 14.87 182 13) 0) Valmont 
+1026
+(command "-view" "o" "left")
+(command "-insert" "PEDESTRIAN SIGNAL HEAD-YELLOW-DRILLED LEFT" "_s" 1 (list 0.5 108 -11) 0) Pelco 
+1088 
+(command "-view" "o" "front")
+(command "-insert" "PEDESTRIAN SIGNAL HEAD-YELLOW-DRILLED LEFT" "_s" 1 (list 14 108 -7.5) 0) Pelco 
+1088
+(command "-view" "o" "front")
+(command "-insert" "ASSY-YELLOW-130 SIGNAL HEAD W" "_s" 1 (list -98 236 10) 0) Pelco 
+1003
+(command "-view" "o" "front")
+(command "-insert" "ASTRO BRAC-GALV" "_s" 1 (list -98 260 0.8) 0) Pelco 
+1021
+text
+-5,-20
+10
+0 P-big
