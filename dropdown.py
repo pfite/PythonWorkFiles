@@ -1,4 +1,5 @@
 import tkinter
+import pylint
 from tkinter import ttk
 from tkinter import * 
 from tkinter.scrolledtext import ScrolledText
@@ -56,7 +57,7 @@ root = Tk()
 root.title("Intersection Pole Generator 1.0")
 
 def finished(file):
-    ttk.Label(mainframe, text = "Finished Generating " + file + " Script!", relief = RAISED,  foreground = "dark green" ,font='Helvetica 12 bold').grid(row = 11, column = 4)
+    ttk.Label(mainframe, text = "Finished Generating " + file + " Script!", relief = RIDGE,  foreground = "dark green" ,font='Helvetica 12 bold').grid(row = 11, column = 4)
     
 
 
@@ -231,6 +232,8 @@ def change_dropdown(*args):
         tkvar.append(StringVar(root))
         tkvar[i].set('130') # set the default option
         sh_popup.append(OptionMenu(mainframe, tkvar[i], *sh_type[i]))
+        sh_popup[-1].configure(activebackground = "#3C892E")
+        #sh_popup[-1].configure(selectbackground = "#3C892E")
         sh_type_label.append(Label(mainframe, text= "SH Type:"))
         sh_type_label[i].grid(row = 4 + i, column = 2)
         sh_popup[i].grid(row = 4 + i, column = 3)
