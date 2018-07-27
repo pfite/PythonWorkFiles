@@ -1,5 +1,4 @@
 import tkinter
-import pylint
 from tkinter import ttk
 from tkinter import * 
 from tkinter.scrolledtext import ScrolledText
